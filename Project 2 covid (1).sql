@@ -19,7 +19,6 @@ Order By 1,2
 
 Select location, date, population, total_cases,  (Cast(total_cases as float)/Cast(population as float))*100 as PercentagePopulationInfected
 From dbo.CovidDeaths
---Where location Like '%states%' 
 Where population is not null 
 Order By 1,2
 
@@ -47,12 +46,10 @@ Group by continent
 Order By TotalDeathCount DESC
 
 -- Global
-Select Sum(new_cases) as total_cases, Sum(cast(new_deaths as int)) as total_deaths, (Sum(cast
-(new_deaths as int))/Sum(new_cases)*100 as DeathPercentage  
+Select Sum(new_cases) as total_cases, Sum(cast(new_deaths as int)) as total_deaths,
+  (Sum(new_deaths)/Sum(new_cases))*100 as DeathPercentage  
 From dbo.CovidDeaths
---Where location Like '%states%'
 Where continent is not null
---Group by date 
 Order By 1,2
 
 
@@ -75,7 +72,6 @@ From dbo.CovidDeaths d
 Join  dbo.CovidVaccination v on d.location=v.location 
 And d.date=v.date
 Where d.continent is not null and population is not null
---Order by 2,3
 )
 Select *, (RollingPplVac/population)*100
 From PopVsVac
@@ -101,7 +97,6 @@ From dbo.CovidDeaths d
 Join  dbo.CovidVaccination v on d.location=v.location 
 And d.date=v.date
 Where d.continent is not null and population is not null
---Order by 2,3
 
 Select *, (RollingPplVac/population)*100
 From #PercentagePopulationVaccinated
@@ -116,7 +111,7 @@ From dbo.CovidDeaths d
 Join  dbo.CovidVaccination v on d.location=v.location 
 And d.date=v.date
 Where d.continent is not null and population is not null
---Order by 2,3
 
+  
 Select*
 From PercentagePopulationVaccinated
