@@ -24,7 +24,7 @@ Order By 1,2
 
 -- Country with highest infected rates over population
 
-Select location, population, total_cases, Max(total_cases) as HighestInfectionCount,(Cast(total_cases as float)/Cast(population as float))*100 as PercentagePopulationInfected
+Select location, population, total_cases, Max(total_cases) as HighestInfectionCount,Max((Cast(total_cases as float))/Cast(population as float))*100 as PercentagePopulationInfected
 From dbo.CovidDeaths
 Where population is not null 
 Group by location,population, total_cases
